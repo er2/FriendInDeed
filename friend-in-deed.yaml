@@ -1,0 +1,50 @@
+swagger: "2.0"
+info:
+  title: Friend In Deed
+  description: A REST API for accessing Deeds from Philadelphia's Department of Records
+  version: 0.0.1
+host: www
+schemes:
+  - https
+paths:
+  /deeds/search/by-address:
+    get:
+
+  /deeds/pdf:
+    get:
+components:
+  schemas:
+    Deed:
+      type: object
+      properties:
+        deedNumber:
+          type: integer
+          format: int64
+        recDate:
+          type: string
+          format: date-time
+        pdfUrl:
+          type: string
+          format: url
+    DeedQueryByAddress:
+      type: object
+      properties:
+        condoName:
+          type: string
+        unit:
+          type: string
+        consolSub:
+          type: string
+          description: "Consol/Sub"
+        houseNumber:
+          type: string
+        ext:
+          type: string
+        direction:
+          type: string
+          enum: [N, S, E, W]
+        streetName:
+          type: string
+          description: "E.g. \"Lil T\""
+        designation:
+          type: string
