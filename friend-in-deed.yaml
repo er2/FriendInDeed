@@ -10,11 +10,38 @@ paths:
         - deed
       summary: Search for a Deed by address a la https://epay.phila-records.com/phillyepay/eagleweb/customSearch.jsp?pageId=Deed
       responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deed'
+        '401':
+          description: Unauthorized
       requestBody:
-        $ref: ''#/components/schemas/DeedQueryByAddress'
+        $ref: '#/components/schemas/DeedQueryByAddress'
   /deeds/pdf/{deedId}:
     get:
+      parameters:
+        - name: deedId
+          in: path
+          description: Deed Number
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
+        '200':
+            description: A PDF file
+            content:
+              application/pdf:
+                schema:
+                  type: string
+                  format: binary
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
       tags:
         - deed
 components:
@@ -32,6 +59,7 @@ components:
           type: string
           format: url
     DeedQueryByAddress:
+      type: object
       properties:
         condoName:
           type: string
@@ -53,7 +81,7 @@ components:
         designation:
           type: string
           enum:
-            - 
+            -
             - 1RD
             - 1ST
             - 60TH
@@ -110,6 +138,7 @@ components:
             type: string
             description: "Notes/Remarks"
           types:
+            description: omit to search all types
             type: array
             items:
               type: string
