@@ -1,17 +1,22 @@
-swagger: "2.0"
+openapi: 3.0.0
 info:
   title: Friend In Deed
   description: A REST API for accessing Deeds from Philadelphia's Department of Records
   version: 0.0.1
-host: www
-schemes:
-  - https
 paths:
   /deeds/search/by-address:
+    post:
+      tags:
+        - deed
+      summary: Search for a Deed by address a la https://epay.phila-records.com/phillyepay/eagleweb/customSearch.jsp?pageId=Deed
+      responses:
+      requestBody:
+        $ref: ''#/components/schemas/DeedQueryByAddress'
+  /deeds/pdf/{deedId}:
     get:
-
-  /deeds/pdf:
-    get:
+      responses:
+      tags:
+        - deed
 components:
   schemas:
     Deed:
@@ -27,7 +32,6 @@ components:
           type: string
           format: url
     DeedQueryByAddress:
-      type: object
       properties:
         condoName:
           type: string
@@ -48,3 +52,86 @@ components:
           description: "E.g. \"Lil T\""
         designation:
           type: string
+          enum:
+            - 
+            - 1RD
+            - 1ST
+            - 60TH
+            - AE
+            - AGVE
+            - Alley
+            - Avenue
+            - BLD
+            - BLV
+            - Boulevard
+            - Circle
+            - CR
+            - Court
+            - Drive
+            - DRT
+            - HST
+            - Heights
+            - Highway
+            - LA
+            - Lane
+            - Loop
+            - MEW
+            - MEWS
+            - ML
+            - PIKE
+            - Parkway
+            - PKY
+            - Place
+            - PLZ
+            - PATH
+            - Road
+            - SEQ
+            - SET
+            - Square
+            - Street
+            - SWT
+            - T
+            - Terrace
+            - TERR
+            - Trail
+            - VE
+            - Way
+            - WLK
+            - WT
+            - Row
+          directionSuffix:
+            type: string
+            enum: [N, S, E, W]
+          suffix:
+            type: string
+          parcelNumber:
+            type: string
+          notesRemarks:
+            type: string
+            description: "Notes/Remarks"
+          types:
+            type: array
+            items:
+              type: string
+              enum:
+                - DA # AFFIDAVIT OF STREET OPENING
+                - DCA # AMENDMENT TO CONDOMINIUM
+                - DPA # AMENDMENT TO PLANNED COMMUNITY
+                - DST # CERTIFICATE OF STOCK TRANSFER
+                - DCN # DECLARATION OF CONDOMINIUM
+                - DPN # DECLARATION OF PLANNED COMMUNITY
+                - D # DEED
+                - DAP # DEED ADVERSE POSSESSION
+                - DDEC # DEED DECEASED
+                - DLB # DEED LAND BANK
+                - DM # DEED MISCELLANEOUS
+                - DMT # DEED MISCELLANEOUS TAXABLE
+                - DC # DEED OF CONDEMNATION
+                - DRTT # DEED RTT - OTHER
+                - DS # DEED SHERIFF
+                - DTT # DEED TANGLED TITLE
+                - DMLP # DM - LIS PENDENS
+                - NFA # NOTARY FRAUD AFFIDAVIT
+                - DCT # TERMINATION OF CONDOMINIUM
+                - DPT # TERMINATION OF PLANNED COMMUNITY
+                - VOID # VOIDED DOCUMENT
